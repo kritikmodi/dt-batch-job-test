@@ -1,7 +1,6 @@
 import datetime
 import logging
 import time
-from pandas import DataFrame
 import pyarrow.parquet as pq
 
 __version__ = '0.0.1'
