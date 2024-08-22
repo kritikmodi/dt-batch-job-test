@@ -12,23 +12,23 @@ def __batch_main__(sub_job_name, scheduled_time, runtime, part_num, num_parts, j
     num_rows = 10**7
     num_columns = 10
     file_path = '/tmp/test_parquet.parquet'
-    duration = 3600
+    duration = 7200
     interval = 120
     num_iterations = duration // interval
     for _ in range(num_iterations):
         try:
-            print('Creating large Parquet file...')
+            print('Creating large Parquet file..')
             data = {f'col_{i}': np.random.rand(num_rows) for i in range(num_columns)}
             df = pd.DataFrame(data)
             table = pa.Table.from_pandas(df)
             pq.write_table(table, file_path)
-            print(f'Parquet file created: {file_path}')
+            print(f'Parquet file created at : {file_path}')
             parquet_file = pq.ParquetFile(file_path)
             print(f'Successfully opened {file_path}')
             parquet_file = None
             print(f'Closed {file_path}')
             os.remove(file_path)
-            print(f'Deleted {file_path}')
+            print(f'Deleted {file_path}\n')
             time.sleep(interval)
         except Exception as e:
             print(f'Error occurred: {e}')
