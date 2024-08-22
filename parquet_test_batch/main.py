@@ -1,14 +1,25 @@
 import datetime
 import logging
 import time
+import pyarrow as pa
 import pyarrow.parquet as pq
+import numpy as np
+import pandas as pd
 
 __version__ = '0.0.1'
 
 def __batch_main__(sub_job_name, scheduled_time, runtime, part_num, num_parts, job_config, rundate, *args):
-    file_path = '/mnt/nfs/home/mkazants/data/2023.parquet'
+    num_rows = 10**7
+    num_columns = 10 
+    file_path = '/tmp/test_parquet.parquet'
+    print('Creating large Parquet file...')
+    data = {f'col_{i}': np.random.rand(num_rows) for i in range(num_columns)}
+    df = pd.DataFrame(data)
+    table = pa.Table.from_pandas(df)
+    pq.write_table(table, file_path)
+    print(f'Parquet file created: {file_path}')
     duration = 3600
-    interval = 10
+    interval = 120
     num_iterations = duration // interval
     for _ in range(num_iterations):
         try:
