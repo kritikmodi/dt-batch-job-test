@@ -1,6 +1,6 @@
 import datetime
-import logging
 import time
+import os
 import pyarrow as pa
 import pyarrow.parquet as pq
 import numpy as np
