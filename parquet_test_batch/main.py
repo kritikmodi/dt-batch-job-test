@@ -20,7 +20,8 @@ def __batch_main__(sub_job_name, scheduled_time, runtime, part_num, num_parts, j
     print(f'Parquet file created at : {file_path}')
     duration = 7200
     interval = 120
-    num_iterations = duration // interval
+    time.sleep(interval)
+    num_iterations = 1
     print('Starting memory operations...\n\n\n')
     for _ in range(num_iterations):
         try:
