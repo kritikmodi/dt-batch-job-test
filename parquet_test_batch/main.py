@@ -5,6 +5,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 import numpy as np
 import pandas as pd
+import gc
 
 __version__ = '0.0.1'
 
@@ -21,13 +22,14 @@ def __batch_main__(sub_job_name, scheduled_time, runtime, part_num, num_parts, j
     duration = 7200
     interval = 120
     time.sleep(interval)
-    num_iterations = 1
+    num_iterations = duration // interval
     print('Starting memory operations...\n\n\n')
     for _ in range(num_iterations):
         try:
             parquet_file = pd.read_parquet(file_path)
             print(f'Created parquet file reference')
             del parquet_file
+            gc.collect()
             print(f'Deleted parquet file reference\n')
             time.sleep(interval)
         except Exception as e:
